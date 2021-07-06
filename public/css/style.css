@@ -1,0 +1,108 @@
+body{
+    font-family: 'Patua One', cursive;
+
+}
+h1 {
+    color: blue;
+    font-size: 5rem;
+    margin: 6rem 0px 0.3rem 0px
+}
+
+#MainContainer {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0); /* IE 9 */
+    -webkit-transform: translate(-50%, 0); /* Chrome, Safari, Opera */	
+    height: 100%;
+    width: 100%;
+    max-width: 960px;
+    text-align: center;
+}
+
+.btn-block {
+    max-height: 5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 20px;line-height: 0rem;
+    width: 40%;
+    font-size: 1.7rem;
+    /* define values in pixels / Percentage or em. whatever suits 
+       your requirements */
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f9f9f9;
+  color: black;
+  line-height: 0;
+  text-align: center;
+  font-family: Helvetica;;
+  font-size: 0.7rem;
+}
+
+.footer div {
+    width: 90%;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.footer * a {
+    color: blue;
+    text-decoration: none;
+}
+.footer * a:hover {
+    text-decoration: underline;
+}
+
+.btn-small {
+    font-size: 0.7rem;
+    width: 30%;
+
+}
+
+form{
+    font-size: 2rem;
+}
+form * input {
+    font-size: 1rem;
+}
+.warning {
+    color: red;
+}
+
+table{
+    width: 100%
+}
+td {
+    cursor: pointer;
+}
+.highlight{    
+    background-color: paleturquoise;
+}
+tr {
+    text-align: center;
+}
+@media only screen and (max-width: 720px) {
+    .btn-block {
+        font-size: 1rem;
+    }
+}
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 3rem;
+    }
+    .btn-block {
+        font-size: 0.8rem;
+    }
+
+    form{
+        font-size: 1rem;
+    }
+    form * input {
+        font-size: 0.8rem;
+    }
+  }

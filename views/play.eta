@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sea Battle!</title>
+    <meta name="description" content="A simple HTML5 Template for new projects.">
+    <meta name="author" content="Joshua Beatty">
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet"  type="text/css"  href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet"> 
+
+    <link rel="shortcut icon" type="x-icon" href="favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <!--<script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+-->
+<!-- Twemoji graphics made by Twitter and other contributors, licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/  /Converted to .ico from original-->
+
+</head>
+  
+<body>
+    
+<div class="" id="MainContainer">
+
+</div>
+<div class="footer">
+  <div >
+  <p style="float: left">View my <a href="https://joshbeatty.me">Website</a></p> <p style="float: right">Check this out on <a>Github</a></p>
+  </div>
+</div>
+
+
+    
+    <script>
+        var clientData = {
+            info: "<%= it.h1 %>",
+            RoomName: "<%= it.RoomName %>",
+            pw: Cookies.get("pw")
+        }
+    </script>
+    <script src="js/game.js"></script>
+</body>
+</html>
