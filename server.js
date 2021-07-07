@@ -1,5 +1,9 @@
 var express = require("express")
 var app = express()
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const port = process.env.PORT || 8000;
 var eta = require("eta")
 const { check } = require('express-validator');
 const loki = require('lokijs');
@@ -70,54 +74,37 @@ app.get("/open-rooms/", function (req, res) {
   });
   res.send(roomDetailsToSend);
 })
-const WebSocket = require('ws');
-let WSServer = WebSocket.Server;
-let server = require('http').createServer();
-let wss = new WSServer({
-  server: server,
-  perMessageDeflate: false
-})
 
-var id = 0;
-var lookup = {};
 
-wss.on('connection', function connection(ws) {
-  ws.id = id++;
-  lookup[ws.id] = ws;
-  ws.on('message', function incoming(message) {
-    console.log(`received: ${message} from id: ${ws.id}`, );
+io.on('connect', onConnect);
+server.listen(port, () => console.log('server listening on port ' + port));
+
+function onConnect(socket){
+  console.log('connect ' + socket.id);
+
+  socket.on('disconnect', () => console.log('disconnect ' + socket.id));
+  socket.on('join-create-room', (clientData) =>{
+    game = games.findOne({RoomName: clientData.RoomName});
+    console.log(game);
+    if(game == null){
+      games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "" });
+      game = games.findOne({RoomName: clientData.RoomName});
+      console.log(game);
+
+      socket.join(clientData.RoomName);
+      socket.emit("status", "wait");
+    }else if(game.full == true){
+      socket.emit("status", "full");
+    } else if(game.password != clientData.pw){
+      socket.emit("status", "bad password");
+    } else {
+      game.full=true;
+      game.user2 = socket.id;
+      games.update(game);
+      socket.join(clientData.RoomName);
+      console.log(game);
+      console.log("test");
+      io.to(clientData.RoomName).emit("debug", "good");
+    } 
   });
-
-  ws.send('something');
-});
-
-server.on('request', app);
-server.listen((process.env.PORT || 8000), function() {
-  console.log(`Combo http and ws server on ${(process.env.PORT || 8000)}`);
-});
-
-
-
-/*
-app.listen(process.env.PORT || 8000, function () {
-  console.log("listening to requests on port " + (process.env.PORT || 8000))
-})   
-/*
-
-const httpServer = require("http").createServer(app);
-const options = { cookie: false };
-const io = require("socket.io")(httpServer, options);
-
-
-io.on("connection", (socket) => {
-  console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-  socket.on("hello", (arg) => {
-    console.log(arg); // world
-  });
-  socket.emit("hello", "world");
-});
-
-httpServer.listen(process.env.PORT || 8000, function () {
-  console.log("listening to requests on port " + (process.env.PORT || 8000))
-}); */
-
+}

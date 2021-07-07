@@ -1,9 +1,25 @@
-var ws = new WebSocket('ws://localhost:8000');
+var socket = io();
 
-ws.onmessage = function (event) {
-  console.log(event.data);
-};
+socket.on('connect', onConnect);
 
-ws.addEventListener('open', function (event) {
-    ws.send("hello");
-});
+function onConnect(){
+  socket.emit("join-create-room", clientData)
+  console.log('connect ' + socket.id);
+
+  socket.on("status", (status) => {
+    if(status == "wait"){
+      
+
+    } else if(status == "full"){
+
+    } else if(status == "bad password"){
+
+    } else if(status == "good"){
+      
+    }
+  });
+
+  socket.on("debug", (...args) =>  {
+    console.log(args);
+  })
+}

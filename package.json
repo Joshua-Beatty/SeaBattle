@@ -9,12 +9,13 @@
     "express-validator": "^6.12.0",
     "forever": "^4.0.1",
     "lokijs": "^1.5.12",
-    "socketio": "^1.0.0"
+    "socket.io": "latest",
+    "socket.io-client": "latest"
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "forever --watch app.js --watchIgnore",
-    "start": "forever --watch start app.js --watchIgnore"
+    "dev": "forever --watch server.js --watchIgnore",
+    "start": "forever --watch start server.js --watchIgnore"
   },
   "author": "",
   "license": "ISC"
