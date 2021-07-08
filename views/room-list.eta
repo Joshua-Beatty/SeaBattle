@@ -41,7 +41,7 @@
                </div>
                <hr  />
                <div style="width: 90%;margin: auto;">
-                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="window.location.href='quick-play'"; style="float: left">
+                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="window.location.href=''"; style="float: left">
                         <h2>Back</h2>
                      </button>
                      <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()"; style="float: right">
@@ -49,7 +49,7 @@
                      </button>
                </div>
             </form><br><br><br>
-            <p class="warning" id="form-warning"></p>
+            <p class="warning" id="form-warning"><%= it.warning %></p>
       </div>
       <div class="footer">
          <div >

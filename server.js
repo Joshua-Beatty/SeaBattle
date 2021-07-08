@@ -20,10 +20,6 @@ games.insert([{ RoomName: 'Thor',  password: "123",full: false, id: 124653, user
 { RoomName: 'Thorium',  password: "", full: false, id: 121233, user1: "1223", user2: "" },
 { RoomName: 'Jak Dum', password: "", full: false, id: 124323, user1: "1323", user2: "" },
 { RoomName: 'blank lol', full: true, id: 128793, user1: "1243", user2: "1233" }, ]);
-/*
-result = games.find({ full: false }); 
-console.log("result 1 : ");
-console.log(result);*/
 
 app.get("/", function (req, res) {
   res.render("index", {
@@ -45,7 +41,8 @@ app.get("/create-room/", function (req, res) {
 })
 app.get("/room-list/", function (req, res) {
   res.render("room-list", {
-    h1: "room-list"})
+    h1: "room-list",
+    warning: req.query.warning})
 })
 app.get("/play", function (req, res) {
   res.render("play", {
@@ -85,18 +82,22 @@ function onConnect(socket){
   socket.on('disconnect', () => console.log('disconnect ' + socket.id));
   socket.on('join-create-room', (clientData) =>{
     game = games.findOne({RoomName: clientData.RoomName});
-    console.log(game);
-    if(game == null){
+    
+    //Create Room if it doesn't exist
+    if(game == null){  
       games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "" });
       game = games.findOne({RoomName: clientData.RoomName});
       console.log(game);
 
       socket.join(clientData.RoomName);
       socket.emit("status", "wait");
+      //Tried to join full game
     }else if(game.full == true){
       socket.emit("status", "full");
+      //Wrong password in a game
     } else if(game.password != clientData.pw){
       socket.emit("status", "bad password");
+      //If you are the second player to join a game
     } else {
       game.full=true;
       game.user2 = socket.id;
@@ -104,7 +105,7 @@ function onConnect(socket){
       socket.join(clientData.RoomName);
       console.log(game);
       console.log("test");
-      io.to(clientData.RoomName).emit("debug", "good");
+      io.to(clientData.RoomName).emit("status", "start");
     } 
   });
 }
