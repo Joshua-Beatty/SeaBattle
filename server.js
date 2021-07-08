@@ -42,12 +42,13 @@ app.get("/create-room/", function (req, res) {
 app.get("/room-list/", function (req, res) {
   res.render("room-list", {
     h1: "room-list",
-    warning: req.query.warning})
+    warning: req.query.warning || ""
+  })
 })
 app.get("/play", function (req, res) {
   res.render("play", {
     h1: "play",
-    RoomName: req.query.RoomName
+    RoomName: req.query.RoomName 
   })
 })
 app.get("/auth", function (req, res) {
