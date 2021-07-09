@@ -18,9 +18,15 @@ function onConnect(){
     }
   });
 
+  socket.on("gameEnd", () =>  {    
+    socket.emit("leave-room")
+    window.location.href='room-list?warning=Opponent Disconnected'
+  })
+
   socket.on("debug", (...args) =>  {
     console.log(args);
   })
+
 }
 
 function startGame(socket, state){

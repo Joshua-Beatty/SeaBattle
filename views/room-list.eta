@@ -41,7 +41,7 @@
                </div>
                <hr  />
                <div style="width: 90%;margin: auto;">
-                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="window.location.href=''"; style="float: left">
+                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="window.location.href='/'"; style="float: left">
                         <h2>Back</h2>
                      </button>
                      <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()"; style="float: right">
@@ -54,7 +54,7 @@
       <div class="footer">
          <div >
             <p style="float: left">View my <a href="https://joshbeatty.me">Website</a></p>
-            <p style="float: right">Check this out on <a>Github</a></p>
+            <p style="float: right">Check this out on <a href="">Github</a></p>
          </div>
       </div>
       <script>

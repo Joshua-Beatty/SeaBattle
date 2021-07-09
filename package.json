@@ -14,8 +14,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "dev": "forever --watch server.js --watchIgnore",
-    "start": "forever --watch start server.js --watchIgnore"
+    "dev": "forever --watch main.js --watchIgnore",
+    "start": "forever --watch start main.js --watchIgnore"
   },
   "author": "",
   "license": "ISC"
