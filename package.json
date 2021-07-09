@@ -12,7 +12,6 @@
     "socket.io": "latest",
     "socket.io-client": "latest"
   },
-  "devDependencies": {},
   "scripts": {
     "dev": "forever --watch main.js --watchIgnore",
     "start": "forever --watch start main.js --watchIgnore"

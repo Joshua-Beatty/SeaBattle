@@ -7,6 +7,11 @@ h1 {
     font-size: 5rem;
     margin: 6rem 0px 0.3rem 0px
 }
+h3 {
+    color: blue;
+    font-size: 2rem;
+    margin: 2rem 0px 0.3rem 0px
+}
 
 #MainContainer {
     position: absolute;
@@ -17,9 +22,17 @@ h1 {
     height: 100%;
     width: 100%;
     max-width: 960px;
-    text-align: center;
+    text-align: center;    
 }
 
+.game-container {
+    display: flex;
+    flex-flow: column;
+    height: 90% !important;
+}
+#form-warning{ 
+    padding-bottom: 10vh;
+}
 .btn-block {
     max-height: 5em;
     margin-top: 0.5em;
@@ -86,6 +99,10 @@ td {
 tr {
     text-align: center;
 }
+#phaser-game canvas {
+    margin: auto !important;
+}
+
 @media only screen and (max-width: 720px) {
     .btn-block {
         font-size: 1rem;

@@ -1,10 +1,16 @@
 var config = {
     type: Phaser.WEBGL,
     parent: 'phaser-game',
+    width: 1024,
+    height: 1024,
     scene: {
         preload: preload,
         create: create
-    }
+    },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
 };
 
 function preload ()
