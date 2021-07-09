@@ -1,69 +1,57 @@
-
-
 <!doctype html>
 <html lang="en">
-   <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Battleship!</title>
-        <meta name="description" content="A simple HTML5 Template for new projects.">
-        <meta name="author" content="Joshua Beatty">
 
-        <link rel="stylesheet"  type="text/css"  href="css/pure.css">
-        <link rel="stylesheet"  type="text/css"  href="css/style.css">
+<head>
+   <title>SeaBattle!</title>
+   <meta name="description" content="Make A SeaBattle Room!">
+   <%~ includeFile("./header.eta") %>
+</head>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-        <link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
-
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-        <!-- Twemoji graphics made by Twitter and other contributors, licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/  /Converted to .ico from original for favicon-->
-   </head>
-   <body>
-      <div class="" id="MainContainer">
-         <h1 class="text-center">Create Room!</h1>
-              <form action=""  class="pure-form" style="max-width:600px;margin: auto;">
-               <hr>
-               <div >
-                  <label for="room-name1" >Room Name</label>
-                  <div ><input type="text"  id="room-name1" name="room-name"></div>
-               </div>
-               <div style="display: flex;justify-content: center;">
-                  <div><label for="password2" >Password?</label>
-                  </div>
-                  <div  style="margin-left: 1rem;">
-                     <div ><input type="checkbox" name="password2" id="password2" value="" data-form-type="other" onclick="document.getElementById('password3').disabled=!this.checked;document.getElementById('password3').value=''"><label  for="password2" ></label></div>
-                  </div>
-               </div>
-               <div >
-                  <label for="password3" >Password</label>
-                  <div ><input type="text" disabled=""  id="password3" name="password"></div>
-               </div>
-               <hr  />
-               <div style="width: 90%;margin: auto;">
-                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="window.location.href='quick-play'"; style="float: left">
-                        <h2>Back</h2>
-                     </button>
-                     <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()"; style="float: right">
-                        <h2>Submit</h2>
-                     </button>
-               </div>
-            </form><br><br><br>
-            <p class="warning" id="form-warning"></p>
-      </div>
-      <div class="footer">
-         <div >
-            <p style="float: left">View my <a href="https://joshbeatty.me">Website</a></p>
-            <p style="float: right">Check this out on <a>Github</a></p>
+<body>
+   <div class="" id="MainContainer">
+      <h1 class="text-center">Create Room!</h1>
+      <form action="" class="pure-form" style="max-width:600px;margin: auto;">
+         <hr>
+         <div>
+            <label for="room-name1">Room Name</label>
+            <div><input type="text" id="room-name1" name="room-name"></div>
          </div>
-      </div>
+         <div style="display: flex;justify-content: center;">
+            <div><label for="password2">Password?</label>
+            </div>
+            <div style="margin-left: 1rem;">
+               <div><input type="checkbox" name="password2" id="password2" value="" data-form-type="other"
+                     onclick="document.getElementById('password3').disabled=!this.checked;document.getElementById('password3').value=''"><label
+                     for="password2"></label></div>
+            </div>
+         </div>
+         <div>
+            <label for="password3">Password</label>
+            <div><input type="text" disabled="" id="password3" name="password"></div>
+         </div>
+         <hr />
+         <div style="width: 90%;margin: auto;">
+            <button class="btn-small pure-button pure-button-primary btn-block" type="button"
+               onclick="window.location.href='quick-play'" ; style="float: left">
+               <h2>Back</h2>
+            </button>
+            <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()" ;
+               style="float: right">
+               <h2>Submit</h2>
+            </button>
+         </div>
+      </form><br><br><br>
+      <p class="warning" id="form-warning"><%= it.warning %></p>
+   </div>
+
+   <%~ includeFile("./footer.eta") %>
+
       <script>
          var clientData = {
-             info: "<%= it.h1 %>"
+            info: "<%= it.h1 %>"
          }
       </script>
       <script src="js/create-room.js"></script>
-   </body>
-</html>
+</body>
 
+</html>

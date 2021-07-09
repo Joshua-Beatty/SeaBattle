@@ -14,7 +14,8 @@ module.exports = (app, games) => {
     app.get("/create-room/", function (req, res) {
       res.render("create-room", {
         h1: "create-room",
-        reasons: ["fast", "lightweight", "simple"]
+        reasons: ["fast", "lightweight", "simple"],
+        warning: ""
       })
     })
     app.get("/room-list/", function (req, res) {
@@ -24,10 +25,17 @@ module.exports = (app, games) => {
       })
     })
     app.get("/play", function (req, res) {
+      if(req.query.RoomName.length > 25){
+        res.render("create-room", {
+          h1: "create-room",
+          warning: "Room Name must be less then 25 characters"
+        })
+      } else {
       res.render("play", {
         h1: "play",
         RoomName: req.query.RoomName 
       })
+    }
     })
     app.get("/auth", function (req, res) {
       allRooms = JSON.parse(JSON.stringify(games.find({ RoomName: req.query.RoomName, password: req.query.pw })));

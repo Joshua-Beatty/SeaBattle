@@ -29,6 +29,10 @@ async function formSubmit(){
         warning.innerHTML = "Room Name must be at least four characters";
         return;
     }
+    if(roomName.value.length  > 25){
+        warning.innerHTML = "Room Name must be less then 25 characters";
+        return;
+    }
     
     Cookies.set('pw', passwordTextbox.value)
     window.location.href=`/play?RoomName=${roomName.value}`;

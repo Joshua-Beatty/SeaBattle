@@ -1,0 +1,15 @@
+<meta name="author" content="Joshua Beatty">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/pure.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Patua+One&display=swap" rel="stylesheet">
+
+<link rel="shortcut icon" type="x-icon" href="favicon.ico" />
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<!-- Twemoji graphics made by Twitter and other contributors, licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/  /Converted to .ico from original for favicon-->
