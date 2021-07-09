@@ -2,11 +2,16 @@ module.exports = (games, io) => {
     return (socket) => {
         console.log('connect ' + socket.id);
       
+        socket.on('debug', (debug) => {
+            console.log('debug: ' + debug);
+        }); 
+
         socket.on('disconnecting', () => {
             console.log('disconnect ' + socket.id);
             console.log(socket.rooms);
             io.to(getLastValue(socket.rooms)).emit("gameEnd");
         });
+
         socket.on('leave-room', () => {
             games.chain().find({RoomName: getLastValue(socket.rooms)}).remove();
             socket.leave(getLastValue(socket.rooms));
@@ -41,6 +46,10 @@ module.exports = (games, io) => {
             console.log("test");
             io.to(clientData.RoomName).emit("status", "start");
           } 
+        });
+
+        socket.on('gameUpdate', (data) => {
+            socket.to(getLastValue(socket.rooms)).emit("gameUpdate", data);
         });
       }
 }

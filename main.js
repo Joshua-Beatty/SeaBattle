@@ -22,8 +22,6 @@ games.insert([{ RoomName: 'Thor',  password: "123",full: false, id: 124653, user
 { RoomName: 'blank lol', full: true, id: 128793, user1: "1243", user2: "1233" }, ]);
 
 require("./express-server")(app, games);
-
-
 io.on('connect', require("./socketio-server")(games, io));
 
 server.listen(port, () => console.log('server listening on port ' + port));
