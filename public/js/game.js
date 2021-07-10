@@ -59,9 +59,7 @@ function create() {
 
     var tap = this.rexGestures.add.tap({});
     tap.on('tap', function (tap, gameObject, lastPointer) {
-        console.log(tap);
         if (tap.tapsCount > 1) {
-            console.log("rotate");
             for (key in ships) {
                 if (ships[key].getBounds().x < tap.x && ships[key].getBounds().x + ships[key].getBounds().width > tap.x &&
                     ships[key].getBounds().y < tap.y && ships[key].getBounds().y + ships[key].getBounds().height > tap.y) {
