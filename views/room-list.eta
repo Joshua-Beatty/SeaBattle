@@ -18,7 +18,7 @@
             <thead>
                <tr>
                   <th>Room Name</th>
-                  <th>PW?</th>
+                  <th>PW?  <img class="reload-button" height="30px" width="30px" src="img/1f504.svg" lt="triangle with all three sides equal" onclick="updateTable()"/></th>
                </tr>
             </thead>
             <tbody id="table-tbody">
@@ -34,8 +34,7 @@
                onclick="window.location.href='/'" ; style="float: left">
                <h2>Back</h2>
             </button>
-            <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()" ;
-               style="float: right">
+            <button class="btn-small pure-button pure-button-primary btn-block" type="button" onclick="formSubmit()" style="float: right">
                <h2>Submit</h2>
             </button>
          </div>

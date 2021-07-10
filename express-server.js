@@ -33,7 +33,8 @@ module.exports = (app, games) => {
       } else {
       res.render("play", {
         h1: "play",
-        RoomName: req.query.RoomName 
+        RoomName: req.query.RoomName,
+        pw: req.query.pw || "" 
       })
     }
     })

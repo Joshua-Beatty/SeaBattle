@@ -17,6 +17,7 @@ function formSubmit(){
 
 
 function updateTable(){
+    tableBody.innerHTML = "" 
     fetch(window.location.origin + "/open-rooms").then(function(response) {
         return response.json();
       }).then(function(data) {

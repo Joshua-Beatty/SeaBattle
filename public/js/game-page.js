@@ -31,6 +31,7 @@ function onConnect(){
 
 function startGame(socket, state){
   if(state == 1){
+    document.getElementsByClassName("page-button")[0].style.display = "none"
     var game = new Phaser.Game(config);
   }
 

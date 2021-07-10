@@ -101,6 +101,18 @@ tr {
 }
 #phaser-game canvas {
     margin: auto !important;
+    align-items: center;
+    justify-content: center;
+}
+.reload-button {
+    height: 100%;
+    float: right;
+    margin-right: -0.5em;
+}
+
+.page-button{
+    height: 5rem;
+    font-size: 2rem;
 }
 
 @media only screen and (max-width: 720px) {

@@ -7,7 +7,7 @@
     <%~ includeFile("./header.eta") %>
 
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.1.2/dist/socket.io.min.js"></script>
 
 </head>
 
@@ -17,7 +17,9 @@
         <h3 class="text-center">
             Room: <%= it.RoomName %>
         </h3>
-        <div id="phaser-game"></div>
+        <div id="phaser-game"> <!-- onclick="window.location.href='/'" -->
+        <button  class="btn-small pure-button pure-button-primary btn-block page-button" type="button" onclick="navigator.clipboard.writeText(window.location + '&pw=' + Cookies.get('pw'))" >Copy Room Link</button>
+        </div>
     </div>
 
     <%~ includeFile("./footer.eta") %>
@@ -26,7 +28,7 @@
         var clientData = {
             info: "<%= it.h1 %>",
             RoomName: "<%= it.RoomName %>",
-            pw: Cookies.get("pw")
+            pw: Cookies.get("pw") || "<%= it.pw %>"
         }
     </script>
     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"
