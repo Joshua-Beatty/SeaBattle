@@ -8,28 +8,24 @@ module.exports = (games, io) => {
 
         socket.on('disconnecting', () => {
             console.log('disconnect ' + socket.id);
-            console.log(socket.rooms);
+            games.chain().find({RoomName: getLastValue(socket.rooms)}).remove();
             io.to(getLastValue(socket.rooms)).emit("gameEnd");
         });
 
         socket.on('leave-room', () => {
             games.chain().find({RoomName: getLastValue(socket.rooms)}).remove();
             socket.leave(getLastValue(socket.rooms));
-            console.log(games);
         });
         socket.on('join-create-room', (clientData) =>{
           game = games.findOne({RoomName: clientData.RoomName});
           
           //Create Room if it doesn't exist
           if(game == null){  
-            games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "" });
+            games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "", layoutsReceived: 0, layouts: "" });
             game = games.findOne({RoomName: clientData.RoomName});
-            console.log(game);
       
             socket.join(clientData.RoomName);
             socket.emit("status", "wait");
-            console.log(socket.rooms);
-            console.log(getLastValue(socket.rooms));
             //Tried to join full game
           }else if(game.full == true){
             socket.emit("status", "full");
@@ -42,15 +38,24 @@ module.exports = (games, io) => {
             game.user2 = socket.id;
             games.update(game);
             socket.join(clientData.RoomName);
-            console.log(game);
-            console.log("test");
             io.to(clientData.RoomName).emit("status", "start");
           } 
         });
 
         socket.on('gameUpdate', (data) => {
-            socket.to(getLastValue(socket.rooms)).emit("gameUpdate", data);
-        });
+          socket.to(getLastValue(socket.rooms)).emit("gameUpdate", data);
+      });
+      socket.on('placedShips', (data) => {
+          game = games.findOne({RoomName: data.RoomName});
+          game.layouts[game.layoutsReceived] = data.layout;
+          game.layoutsReceived += 1;
+          if(game.layoutsReceived == 2){
+            io.to(getLastValue(socket.rooms)).emit("gameUpdate", "bothReady");
+          } else {
+            socket.to(getLastValue(socket.rooms)).emit("gameUpdate", "opponentReady");
+          }
+          games.update(game);
+      });
       }
 }
 

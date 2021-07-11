@@ -1,7 +1,7 @@
 
 <div class="footer">
     <div>
-        <p style="float: left">View my <a href="https://joshbeatty.me">Website</a></p>
-        <p style="float: right">Check this out on <a href="https://github.com/Joshua-Beatty/SeaBattle">Github</a></p>
+        <p style="float: left">View my <a target="_blank"  href="https://joshbeatty.me">Website</a></p>
+        <p style="float: right">Check this out on <a target="_blank" href="https://github.com/Joshua-Beatty/SeaBattle">Github</a></p>
     </div>
 </div>
