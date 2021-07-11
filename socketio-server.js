@@ -21,7 +21,7 @@ module.exports = (games, io) => {
           
           //Create Room if it doesn't exist
           if(game == null){  
-            games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "", layoutsReceived: 0, layouts: "" });
+            games.insert({ RoomName: clientData.RoomName,  password: clientData.pw, full: false, user1: socket.id, user2: "", layoutsReceived: 0, layouts: [], turn: "" });
             game = games.findOne({RoomName: clientData.RoomName});
       
             socket.join(clientData.RoomName);
@@ -47,14 +47,17 @@ module.exports = (games, io) => {
       });
       socket.on('placedShips', (data) => {
           game = games.findOne({RoomName: data.RoomName});
-          game.layouts[game.layoutsReceived] = data.layout;
+          game.layouts[game.layoutsReceived] = {id: socket.id, layout: data.layout};
           game.layoutsReceived += 1;
-          if(game.layoutsReceived == 2){
-            io.to(getLastValue(socket.rooms)).emit("gameUpdate", "bothReady");
-          } else {
-            socket.to(getLastValue(socket.rooms)).emit("gameUpdate", "opponentReady");
-          }
           games.update(game);
+          if(game.layoutsReceived == 2){
+            game.turn = Math.floor(Math.random()*2)
+            games.update(game);
+            io.to(getLastValue(socket.rooms)).emit("gameUpdate", {message:"bothReady", turn: game.layouts[game.turn].id});
+          } else {
+            socket.to(getLastValue(socket.rooms)).emit("gameUpdate", {message:"opponentReady"});
+          }
+          console.log(game.turn);
       });
       }
 }

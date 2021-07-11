@@ -36,8 +36,8 @@ var ships = [];
 function create() {
     this.add.image(512, 512, 'background');
     this.add.image(512, 600, 'grid');
-    textMessage = this.add.text(512, 975, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 35, align: "center", color: "black"});
-                    
+    textMessage = this.add.text(512, 975, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', fontSize: 35, align: "center", color: "black" });
+
 
     doubleHelp = this.add.image(300, 150, 'double').setScale(0.25);
     button = this.add.sprite(750, 150, 'buttonA').setInteractive()
@@ -59,14 +59,14 @@ function create() {
     ships = [ship5, ship4, ship3a, ship3b, ship2];
     for (key in ships) {
         ships[key].setOrigin(0, 0)
-            .on('pointermove', function () { this.setTint(0x00ff00) })
+            .on('pointermove', function () { if (gameState == 0) this.setTint(0x00ff00) })
             .on('pointerout', function () { this.clearTint() });
         this.input.setDraggable(ships[key]);
     }
 
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
 
-        if (ships.includes(gameObject)) {
+        if (ships.includes(gameObject) && gameState == 0) {
             gameObject.setTint(0x0000ff);
             stayInGrid(gameObject, dragX, dragY);
 
@@ -84,66 +84,77 @@ function create() {
     var tap = this.rexGestures.add.tap({});
 
     tap.on('tap', function (tap, gameObject, lastPointer) {
-        if (tap.tapsCount > 1) {
-            for (key in ships) {
-                if (ships[key].getBounds().x < tap.x && ships[key].getBounds().x + ships[key].getBounds().width > tap.x &&
-                    ships[key].getBounds().y < tap.y && ships[key].getBounds().y + ships[key].getBounds().height > tap.y) {
-                    if (!ships[key].info.horizontal) {
-                        ships[key].rotation = -1.57;
-                        ships[key].info.horizontal = true;
-                        ships[key].setOrigin(1, 0);
-                    } else {
-                        ships[key].rotation = 0;
-                        ships[key].info.horizontal = false;
-                        ships[key].setOrigin(0, 0);
-                    }
-                    stayInGrid(ships[key], ships[key].x, ships[key].y);
-                }
-            }
-        } else {
-            if (button.getBounds().x < tap.x && button.getBounds().x + button.getBounds().width > tap.x &&
-                button.getBounds().y < tap.y && button.getBounds().y + button.getBounds().height > tap.y) {
-                goodLayout = true;
-                for (let i = 0; i < ships.length - 1; i++) {
-                    for (let j = i + 1; j < ships.length; j++) {
-                        if (Phaser.Geom.Intersects.RectangleToRectangle(ships[j].getBounds(), ships[i].getBounds())) {
-                            goodLayout = false;
+        if (gameState == 0) {
+            if (tap.tapsCount > 1) {
+                for (key in ships) {
+                    if (ships[key].getBounds().x < tap.x && ships[key].getBounds().x + ships[key].getBounds().width > tap.x &&
+                        ships[key].getBounds().y < tap.y && ships[key].getBounds().y + ships[key].getBounds().height > tap.y) {
+                        if (!ships[key].info.horizontal) {
+                            ships[key].rotation = -1.57;
+                            ships[key].info.horizontal = true;
+                            ships[key].setOrigin(1, 0);
+                        } else {
+                            ships[key].rotation = 0;
+                            ships[key].info.horizontal = false;
+                            ships[key].setOrigin(0, 0);
                         }
+                        stayInGrid(ships[key], ships[key].x, ships[key].y);
                     }
                 }
-                if (goodLayout) {
-                    console.log("good");
-                    layout = []
-                    for(key in ships){
-                        layout[key] = {
-                            x: Math.round((ships[key].x - 161) / 90),
-                            y: Math.round((ships[key].y - 249) / 90),
-                        size: ships[key].info.size,
-                        horizontal: ships[key].info.horizontal,
+            } else {
+                if (button.getBounds().x < tap.x && button.getBounds().x + button.getBounds().width > tap.x &&
+                    button.getBounds().y < tap.y && button.getBounds().y + button.getBounds().height > tap.y) {
+                    goodLayout = true;
+                    for (let i = 0; i < ships.length - 1; i++) {
+                        for (let j = i + 1; j < ships.length; j++) {
+                            if (Phaser.Geom.Intersects.RectangleToRectangle(ships[j].getBounds(), ships[i].getBounds())) {
+                                goodLayout = false;
+                            }
                         }
                     }
-                    textMessage.setText("Waiting On Opponent")
-                    textMessage.x =512- textMessage.width/2;
-
-                    socket.emit("placedShips", {layout: layout, RoomName: clientData.RoomName})
-                    console.log(layout);
-                    for(key in ships){
-                        ships[key].setActive(false).setVisible(false);
+                    if (goodLayout) {
+                        console.log("good");
+                        layout = []
+                        for (key in ships) {
+                            layout[key] = {
+                                x: Math.round((ships[key].x - 161) / 90),
+                                y: Math.round((ships[key].y - 249) / 90),
+                                size: ships[key].info.size,
+                                horizontal: ships[key].info.horizontal,
+                            }
+                        }
+                        textMessage.setText("Waiting On Opponent")
+                        textMessage.x = 512 - textMessage.width / 2;
+                        socket.emit("placedShips", { layout: layout, RoomName: clientData.RoomName })
+                        console.log(layout);
                         button.setActive(false).setVisible(false);
                         doubleHelp.setActive(false).setVisible(false);
+                        gameState = 1;
                     }
-                    
                 }
             }
         }
     });
-    
+
     socket.on("gameUpdate", data => {
-        if(data == "opponentReady"){
+        if (data.message == "opponentReady") {
             textMessage.setText("Opponent Is Ready")
-            textMessage.x = 512- textMessage.width/2;
-        } else if(data =="bothReady"){
+            textMessage.x = 512 - textMessage.width / 2;
+        } else if (data.message == "bothReady") {
             textMessage.setText("")
+            this.add.image(256, 128, 'grid').setScale(0.25);
+
+            for (key in ships) {
+                ships[key].setScale(0.25);
+                ships[key].x = 168.25 + (Math.round((ships[key].x - 161) / 90) * 90 / 4);
+                ships[key].y = 40.25 + (Math.round((ships[key].y - 249) / 90) * 90 / 4);
+                this.children.bringToTop(ships[key])
+            }
+            if (data.turn == socket.id) {
+                console.log("my turn")
+            } else {
+                console.log("their turn")
+            }
         }
     });
 }
